@@ -1,4 +1,4 @@
-import { ask, getNumberPositive } from "./Funções/io.js"; // Importação das funções de IO
+import { ask, getNumberInRange, getNumberPositive } from "./Funções/io.js"; // Importação das funções de IO
 
 // Função responsável por calcular os dois tipos de Scores
 function calculateScore(itemA,itemB,itemC,type) {
@@ -45,9 +45,9 @@ function main() {
     console.log(message);
 
     //Entrada
-    const itemA = getNumberPositive("Informe o valor para o critério \"A\"(0 a 100): ");
-    const itemB = getNumberPositive("Informe o valor para o critério \"B\"(0 a 100): ");
-    const itemC = getNumberPositive("Informe o valor para o critério \"C\"(0 a 100): ");
+    const itemA = getNumberInRange("Informe o valor para o critério \"A\"(0 a 100): ",0,100,"Digite um valor de 0 a 100!\n");
+    const itemB = getNumberInRange("Informe o valor para o critério \"B\"(0 a 100): ",0,100,"Digite um valor de 0 a 100!\n");
+    const itemC = getNumberInRange("Informe o valor para o critério \"C\"(0 a 100): ",0,100,"Digite um valor de 0 a 100!\n");
     
     //Processamento
     const SCORE1 = calculateScore(itemA,itemB,itemC,1);
