@@ -58,8 +58,8 @@ function main() {
 
     message = (`
     ===================SCORES===================
-        Score Antigo: ${SCORE1} --> ${scoreClassifier(SCORE1,1)}
-         Score Novo:  ${SCORE2} --> ${scoreClassifier(SCORE2,2)}
+        Score Antigo: ${SCORE1.toFixed(1)} --> ${scoreClassifier(SCORE1,1)}
+         Score Novo:  ${SCORE2.toFixed(1)} --> ${scoreClassifier(SCORE2,2)}
     ============================================\n`);
     
     console.log(message);
