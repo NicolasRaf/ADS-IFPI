@@ -4,28 +4,27 @@ import {escreva,get_number_positive,pergunta} from "./Funções/io.js"
 function main(){
 
     //Apresentação
-        let mensagem = `\n[-----------Calcular Expressão 2-----------]\n`
-        escreva(mensagem)
+    let mensagem = `\n[-----------Calcular Expressão 2-----------]\n`
+    escreva(mensagem)
 
 
     //Entrada
-        const numero = get_number_positive("Digite o valor de N na formula: ")
+    const numero = get_number_positive("Digite o valor de N na formula: ")
 
     //Saída
-        mensagem = (`
+    mensagem = (`
     =============================================
       O valor de S com N sendo ${numero} é ${calcular_Formula(numero).toFixed(2)}
     =============================================
     `)
 
-        escreva(mensagem)
-        if (! pergunta(`Finalizar Programa?(Press Enter)`))
-            console.clear()
+    escreva(mensagem)
+    if (! pergunta(`Finalizar Programa?(Press Enter)`))
+      console.clear()
 
 }
 
 //Processamento
-
 function calcular_Formula (num) {
     let resultado = 0 
     let denominador = num 
