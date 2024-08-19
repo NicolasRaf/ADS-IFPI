@@ -4,8 +4,9 @@ function ehVogal(letra){
     const vogais = "aeiouAEIOU";
 
     for (let i = 0;i < vogais.length; i++){
-        if (letra === vogais[i]);
+        if (letra === vogais[i]){
             return true;
+        }
     }
 
     return false;
@@ -47,7 +48,6 @@ function main() {
     }
 
     //Saída
-    console.clear();
 
     message = (`
     ============================================
