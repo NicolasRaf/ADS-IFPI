@@ -1,5 +1,28 @@
 import { ask } from "./Funções/io.js"; // Importação das funções de IO
 
+function ehVogal(letra){
+    const vogais = "aeiouAEIOU";
+
+    for (let i = 0;i < vogais.length; i++){
+        if (letra === vogais[i]);
+            return true;
+    }
+
+    return false;
+}
+
+function inverterFrase(text){
+    let fraseInvertida = "";
+    let index = text.length - 1;
+
+    for (let letra in text){
+        fraseInvertida += text[index];
+        index--;
+    }
+
+    return fraseInvertida;
+}
+
 function main() {
     console.clear();
 
@@ -8,11 +31,18 @@ function main() {
     console.log(message);
 
     //Entrada
-    let frase = ask("Digite a frase: ")
+    const frase = ask("Digite a frase: ");
 
     //Processamento
-    for ( let x in frase.slice(frase.length)){
-        console.log()
+    let fraseCriptografada = "";
+
+
+    for (let letra of frase){
+        if (ehVogal(letra)){
+            fraseCriptografada += letra;
+        }else{
+            fraseCriptografada += "#";
+        }
 
     }
 
@@ -21,7 +51,7 @@ function main() {
 
     message = (`
     ============================================
-     Frase Criptografada -> ${frase.length}
+     Frase Criptografada -> ${inverterFrase(fraseCriptografada)}
     ============================================\n`);
     
     console.log(message);
