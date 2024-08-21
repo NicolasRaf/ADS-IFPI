@@ -1,11 +1,11 @@
 import { getNumber, getNumberInRange, getNumberPositive,ask} from "./utils.js";
-import { generateNumbers} from "./vectorUtils.js";
-import { readFileSync } from "fs"
+import { generateNumbers, valuesSum} from "./vectorUtils.js";
+import { readFileSync } from "fs";
 
 export function initializeVector(currentVector){
     if (currentVector.length){
-        console.log("Reinicie o vetor primeiro!!!")
-        return currentVector
+        console.log("Reinicie o vetor primeiro!!!");
+        return currentVector;
     }
 
 
@@ -16,7 +16,7 @@ export function initializeVector(currentVector){
         [3] Ler Arquivo
         [4] Cancelar 
     -----------------------------
-    `)
+    `);
 
     let option = getNumberInRange("==> ",1,4,"\nSelecione uma opção valida!\n");
     
@@ -39,37 +39,71 @@ export function initializeVector(currentVector){
 
         return readFile(name);
     }else{
-        console.clear()
-        console.log("Operação Cancelada!!!")
+        console.clear();
+        console.log("Operação Cancelada!!!");
 
-        return []
+        return [];
     }
 }
 
 export function showLength(vector){
-    console.log(`Numero de valores no vetor: ${vector.length}`)
+    console.log(`Numero de valores no vetor: ${vector.length}`);
 }
 
 export function minMaxValues(vector){
-    let highestValue = [vector[0],1]
-    let lowestValue = [vector[0],1]
+    let highestValue = [vector[0],1];
+    let lowestValue = [vector[0],1];
 
     for (let i in vector){
-        var number = vector[i]
+        var number = vector[i];
 
         if (number > highestValue[0]){
-            highestValue[0] = number
-            highestValue[1] = Number(i) + 1
+            highestValue[0] = number;
+            highestValue[1] = Number(i) + 1;
         }
         if (number < lowestValue[0]){
-            lowestValue[0] = number
-            lowestValue[1] = Number(i) + 1
+            lowestValue[0] = number;
+            lowestValue[1] = Number(i) + 1;
         }   
     }
 
-    console.log(`Maior valor: ${highestValue[0]} ==> ${highestValue[1]}° posição`)
-    console.log(`Menor valor: ${lowestValue[0]} ==> ${lowestValue[1]}° posição`)
+    console.log(`Maior valor: ${highestValue[0]} ==> ${highestValue[1]}° posição`);
+    console.log(`Menor valor: ${lowestValue[0]} ==> ${lowestValue[1]}° posição`);
 }
+
+export function showSum(vector){
+    console.log(`Somatório: ${valuesSum(vector)}`);
+}
+
+export function valuesAverage(vector){
+    let average = valuesSum(vector)/vector.length
+    
+    console.log(`Média: ${average.toFixed(1)}`)
+}
+
+export function showValues(vector, type){
+    let newVector = []
+
+    for (let number of vector){
+        if (number > 0 && type === "positive"){
+            newVector.push(number)
+        }else if (number < 0 && type === "negative"){
+            newVector.push(number)
+        }
+    }
+
+    if (type === "all"){
+        console.log(`Valores: ${vector}`)
+    } else if(type === "positive"){
+        console.log(`Valores Positivos: ${newVector}`)
+        showLength(newVector)
+    } else if(type === "negative"){
+        console.log(`Valores Negativos: ${newVector}`)
+        showLength(newVector)
+    }
+
+}
+
 
 function storageNumbers(size,min,max){
     console.clear();
@@ -87,17 +121,17 @@ function storageNumbers(size,min,max){
 }
 
 function readFile(name){
-    const data = readFileSync(name,"utf-8")
-    let lines = data.split("\n")
+    const data = readFileSync(name,"utf-8");
+    let lines = data.split("\n");;
     
-    let vector = []
+    let vector = [];
 
     for (let number of lines){
-        vector.push(number.trim())
+        vector.push(number.trim());
     }
 
-    console.clear()
-    console.log("Arquivo lido com sucesso!")
+    console.clear();
+    console.log("Arquivo lido com sucesso!");
 
-    return vector
+    return vector;
 }

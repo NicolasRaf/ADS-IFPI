@@ -14,5 +14,14 @@ export function generateNumbers(size,min,max){
 
 }
 
+export function valuesSum(vector){
+    let sum = 0;
+
+    for (let number of vector){
+        sum += Number(number);
+    }
+
+    return sum
+}
 
 
