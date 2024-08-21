@@ -35,9 +35,9 @@ function main(){
 
         if (option === 1){
              vector = initializeVector(vector);
-        }else if (option === 2){
+        }else if(option === 2){
             showValues(vector,"all")
-        }else if (option === 3){
+        }else if(option === 3){
             console.log("Valores Resetados!");
             vector = [];
         }else if(option === 4){
@@ -52,6 +52,8 @@ function main(){
             showValues(vector, "positive")
         }else if(option === 9){
             showValues(vector, "negative")
+        }else if (option === 10){
+            updateValues(vector)
         }
 
 

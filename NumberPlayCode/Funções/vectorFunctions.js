@@ -104,6 +104,16 @@ export function showValues(vector, type){
 
 }
 
+export function updateValues(vector){
+    console.log(`
+        -------------------------------------------
+            [1] Gerar Valores      [4] Cancelar
+            [2] Informa Valores    [5] Cancelar
+            [3] Ler Arquivo        [6] Cancelar
+        -------------------------------------------
+        `);
+
+}
 
 function storageNumbers(size,min,max){
     console.clear();
