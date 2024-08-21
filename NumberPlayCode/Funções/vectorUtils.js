@@ -3,7 +3,7 @@ export function generateNumbers(size,min,max){
     let count = 0;
     let vector = [];
 
-    while (count <= size){
+    while (count < size){
         var number = Math.floor(Math.random() * ((max + 1) - min)) + min;
         vector.push(number);
         count++;

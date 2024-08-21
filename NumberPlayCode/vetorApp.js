@@ -1,5 +1,5 @@
 import {getNumberInRange, ask} from "./Funções/utils.js";
-import { initializeVector,showLength } from "./Funções/vectorFunctions.js";
+import { initializeVector,minMaxValues,showLength } from "./Funções/vectorFunctions.js";
 
 function showMenu() {
 
@@ -23,6 +23,7 @@ function showMenu() {
 
 
 function main(){
+
     let option = showMenu();
     let vector = [];
 
@@ -37,6 +38,8 @@ function main(){
             vector = [];
         }else if(option === 4){
             showLength(vector)
+        }else if(option === 5){
+            minMaxValues(vector)
         }
 
 

@@ -51,12 +51,24 @@ export function showLength(vector){
 }
 
 export function minMaxValues(vector){
-    
-
+    let highestValue = [vector[0],1]
+    let lowestValue = [vector[0],1]
 
     for (let i in vector){
+        var number = vector[i]
 
+        if (number > highestValue[0]){
+            highestValue[0] = number
+            highestValue[1] = Number(i) + 1
+        }
+        if (number < lowestValue[0]){
+            lowestValue[0] = number
+            lowestValue[1] = Number(i) + 1
+        }   
     }
+
+    console.log(`Maior valor: ${highestValue[0]} ==> ${highestValue[1]}° posição`)
+    console.log(`Menor valor: ${lowestValue[0]} ==> ${lowestValue[1]}° posição`)
 }
 
 function storageNumbers(size,min,max){
@@ -89,5 +101,3 @@ function readFile(name){
 
     return vector
 }
-
-
