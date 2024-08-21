@@ -1,5 +1,5 @@
-import {getNumberInRange, ask} from "./Funções/io.js"
-import { initializeVector } from "./Funções/vectorFunctions.js"
+import {getNumberInRange, ask} from "./Funções/utils.js";
+import { initializeVector,showLength } from "./Funções/vectorFunctions.js";
 
 function showMenu() {
 
@@ -8,10 +8,10 @@ function showMenu() {
     console.log(`
     ------------------------------- NumberPlay --------------------------------   
 
-      [1] Inicializar Vetor          [5] Letras Obrigatórias 
-      [2] Palavras sem Letra X       [6] Palavras em Ordem Alfabética 
-      [3] Letras Proibidas           [7] Ordem Alfabética em Qualquer Parte
-      [4] Letras Únicas              [8] Finalizar Execução   
+      [1] Inicializar Vetor          [5] Menor e Maior valores 
+      [2] Mostrar Valores            [6] Palavras em Ordem Alfabética 
+      [3] Resetar Vetor              [7] Ordem Alfabética em Qualquer Parte
+      [4] Quantidade de itens        [8] Finalizar Execução   
                                                                             
     `);
 
@@ -22,13 +22,21 @@ function showMenu() {
 }
 
 
-
 function main(){
     let option = showMenu();
+    let vector = [];
 
     while (option !== 8){
+
         if (option === 1){
-            initializeVector()
+             vector = initializeVector(vector);
+        }else if (option === 2){
+            console.log(`Valores: ${vector}`);
+        }else if (option === 3){
+            console.log("Valores Resetados!");
+            vector = [];
+        }else if(option === 4){
+            showLength(vector)
         }
 
 
