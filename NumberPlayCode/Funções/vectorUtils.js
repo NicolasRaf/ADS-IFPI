@@ -1,4 +1,4 @@
-import {readdirSync, statSync} from "fs"
+import {readdirSync, statSync} from "fs";
 
 export function generateNumbers(size,min,max){
     console.clear();
@@ -11,7 +11,7 @@ export function generateNumbers(size,min,max){
         count++;
     }   
 
-    console.log("Vetor gerado com sucesso!")
+    console.log("Vetor gerado com sucesso!");
     return vector;
 
 }
@@ -77,7 +77,7 @@ export function swapNegatives(vector,max,min){
         }
     }
     
-    console.clear()
+    console.clear();
     console.log(`Valores negativos trocados por números aleatórios!`);
     console.log(`Valores trocados: ${swappedNumbers} => ${newNumbers}`);
 

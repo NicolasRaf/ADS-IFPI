@@ -50,11 +50,11 @@ export function showLength(vector){
     if (vector.length > 0){
         console.log(`Numero de valores no vetor: ${vector.length}`);
     }else{
-        console.log("O Vetor está vazio!")
+        console.log("O Vetor está vazio!");
     }
 }
 export function minMaxValues(vector){
-    if (vectorIsEmpty(vector)) return vector
+    if (vectorIsEmpty(vector)) return vector;
 
     let highestValue = [vector[0],1];
     let lowestValue = [vector[0],1];
@@ -77,13 +77,13 @@ export function minMaxValues(vector){
 }
 
 export function showSum(vector){
-    if (vectorIsEmpty(vector)) return vector
+    if (vectorIsEmpty(vector)) return vector;
 
     console.log(`Somatório: ${valuesSum(vector)}`);
 }
 
 export function valuesAverage(vector){
-    if (vectorIsEmpty(vector)) return vector
+    if (vectorIsEmpty(vector)) return vector;
 
     let average = valuesSum(vector)/vector.length;
     
@@ -116,7 +116,7 @@ export function showValues(vector, type){
 }
 
 export function updateValues(vector){
-    if (vectorIsEmpty(vector)) return vector
+    if (vectorIsEmpty(vector)) return vector;
 
     console.log(`
         ------------------------------ Update Vector ----------------------------------
@@ -161,9 +161,9 @@ export function updateValues(vector){
 }
 
 export function addToVector(vector){
-    if (vectorIsEmpty(vector)) return vector
+    if (vectorIsEmpty(vector)) return vector;
 
-    const newVector = initializeVector([],"novo ")
+    const newVector = initializeVector([],"novo ");
 
     if (newVector.length === 0){
         console.clear();
@@ -172,14 +172,14 @@ export function addToVector(vector){
         return vector;
 
     }
-        console.clear()
-        console.log(`Novo vetor criado e adicionado => ${newVector}`)
+        console.clear();
+        console.log(`Novo vetor criado e adicionado => ${newVector}`);
 
     for (let number of newVector){
-        vector.push(number)
+        vector.push(number);
     }
 
-    return vector
+    return vector;
 }
 
 export function removeItensByValue(vector) {
@@ -205,55 +205,55 @@ export function removeItensByValue(vector) {
   }
 
 export function removeItensByIndex(vector){
-    if (vectorIsEmpty(vector)) return vector
+    if (vectorIsEmpty(vector)) return vector;
 
     for (let i in vector){
-        console.log(`\t${vector[i]} ==> ${Number(i) + 1}°`)
+        console.log(`\t${vector[i]} ==> ${Number(i) + 1}°`);
     }
 
-    let position = getNumberInRange("\nSelecione a posição do valor a ser removido: ",1,vector.length,"\nInsira uma posição valida!\n")
+    let position = getNumberInRange("\nSelecione a posição do valor a ser removido: ",1,vector.length,"\nInsira uma posição valida!\n");
    
-    console.clear()
-    console.log(`O valor na ${position}º posição foi removido!`)
+    console.clear();
+    console.log(`O valor na ${position}º posição foi removido!`);
 
-    vector.splice(position - 1,1)
-    return vector
+    vector.splice(position - 1,1);
+    return vector;
 }
 
 export function editItensByIndex(vector){
-    if (vectorIsEmpty(vector)) return vector
+    if (vectorIsEmpty(vector)) return vector;
 
     for (let i in vector){
-        console.log(`\t${vector[i]} ==> ${Number(i) + 1}°`)
+        console.log(`\t${vector[i]} ==> ${Number(i) + 1}°`);
     }
 
-    let position = getNumberInRange("\nSelecione a posição do valor a ser editado: ",1,vector.length,"\nInsira uma posição valida!\n")
-    let newNumber = getNumber("Informe o valor a ser colocado no lugar: ")
+    let position = getNumberInRange("\nSelecione a posição do valor a ser editado: ",1,vector.length,"\nInsira uma posição valida!\n");
+    let newNumber = getNumber("Informe o valor a ser colocado no lugar: ");
 
-    vector[position - 1] = newNumber
+    vector[position - 1] = newNumber;
 
-    console.clear()
-    console.log(`O valor na ${position}º foi trocado por ${newNumber}`)
+    console.clear();
+    console.log(`O valor na ${position}º foi trocado por ${newNumber}`);
 
     
-    return vector
+    return vector;
 }
 
 export function saveVector(vector){
-    if (vectorIsEmpty(vector)) return vector
-    let data = ""
+    if (vectorIsEmpty(vector)) return vector;
+    let data = "";
 
     for (let number of vector){
         if (number !== vector[vector.length - 1]){
-            data += number + "\n"
+            data += number + "\n";
         }else{
-            data += number
+            data += number;
         }
     }
 
-    console.log(`Vetor salvo no arquivo "numbersVector.txt"! `)
+    console.log(`Vetor salvo no arquivo "numbersVector.txt"! `);
 
-    writeFileSync("numbersVector.txt", data); 
+    writeFileSync("./NumberVectors/vector.txt", data); 
 }
 
 function storageNumbers(size,min,max){
@@ -267,16 +267,18 @@ function storageNumbers(size,min,max){
         vector.push(number);
     }
 
-    console.log("Vetor gerado com sucesso!")
+    console.log("Vetor gerado com sucesso!");
     return vector;
 
 }
 
  function readFile(){
-    showFiles(process.cwd())
+    showFiles("./NumberVectors");
 
     try {
-        let name = ask(`\nInforme o nome do arquivo com a extensão(Ex: File.txt): `);
+        let name = "./NumberVectors/"
+        name += ask(`\nInforme o nome do arquivo com a extensão(Ex: File.txt): `);
+
         const data = readFileSync(name,"utf-8");
         let lines = data.split("\n");
         
@@ -292,15 +294,15 @@ function storageNumbers(size,min,max){
         return vector;
 
     }catch (err){
-        console.log("Arquivo não encontrado, tente novamente!")
-        return readFile()
+        console.log("Arquivo não encontrado, tente novamente!");
+        return readFile();
     }
 }
 
 function vectorIsEmpty(vector){
     if (vector.length === 0){
-        console.log("Inicialize o vetor primeiro!")
-        return true
+        console.log("Inicialize o vetor primeiro!");
+        return true;
     }
 }
 

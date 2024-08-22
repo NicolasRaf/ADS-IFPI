@@ -38,7 +38,7 @@ function main(){
         if (option === 1){
              vector = vectorFunctions.initializeVector(vector,"");
         }else if(option === 2){
-            vectorFunctions.showValues(vector,"all")
+            vectorFunctions.showValues(vector,"all");
         }else if(option === 3){
             console.log("Valores Resetados!");
             vector = [];
@@ -75,7 +75,7 @@ function main(){
     if (vector.length > 0){
         vectorFunctions.saveVector(vector);
     }
-    console.log("Programa Encerrado...")
+    console.log("Programa Encerrado...");
         
 }
 
