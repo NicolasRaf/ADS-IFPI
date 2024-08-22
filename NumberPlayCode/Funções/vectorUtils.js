@@ -130,7 +130,7 @@ export function shuffleVector(vector){
 
 export function showFiles(path) {
     let files = readdirSync(path);
-    console.log(`\n==> Arquivos Encontrados na Pasta: `);
+    console.log(`\n==> Arquivos Encontrados na Pasta "${path}": `);
 
     for (let file of files) {
         let filePath = `${path}/${file}`;
