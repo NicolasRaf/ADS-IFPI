@@ -1,4 +1,4 @@
-import {readdirSync} from "fs"
+import {readdirSync, statSync} from "fs"
 
 export function generateNumbers(size,min,max){
     console.clear();
@@ -128,13 +128,14 @@ export function shuffleVector(vector){
     return shuffledVector;
 }
 
-export function showFiles(path,arquives){
-    arquives = []
+export function showFiles(path) {
+    let files = readdirSync(path);
+    console.log(`\n==> Arquivos Encontrados na Pasta: `);
 
-    let files = readdirSync(path)
-    console.log(`\n==> Arquivos Encontrados na Pasta: `)
-
-    for (let file of files){
-        console.log(`- ${file}`)
+    for (let file of files) {
+        let filePath = `${path}/${file}`;
+        if (statSync(filePath).isFile()) {
+            console.log(`- ${file}`);
+        }
     }
 }
