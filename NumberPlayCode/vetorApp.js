@@ -14,7 +14,7 @@ function showMenu() {
              [04] Quantidade de itens         [12] Remover Itens por Valor
              [05] Menor e Maior número        [13] Remover Item por Posição
              [06] Somatório dos Valores       [14] Editar Valor por Posição
-             [07] Média dos Valores           [15] Salvar Vetor em Arquivo .txt
+             [07] Média dos Valores           [15] Salvar Vetor em Arquivo ".txt"
              [08] Valores Positivos           [16] Sair(Save Automático)
 
     -----------------------------------------------------------------------------------

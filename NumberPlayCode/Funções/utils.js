@@ -22,13 +22,29 @@ export function aksLetter(text){
   return answer
 }
 
-// Recebe um numero qualquer com base na pergunta enviada ao usuário
-export function  getNumber(text){
-    const number = Number(question(text))
+// Função para obter um número do usuário
+export function getNumber(prompt) {
+  let input = question(prompt); 
 
-    return number
+  // Verifica se a entrada contém apenas dígitos e opcionalmente um sinal de menos no início
+  for (let char of input) {
+    let charCode = char.charCodeAt(0);
+
+    // Permite um sinal de menos no início
+    if (charCode === 45 && char === input[0]) {
+      continue;
+    }
+
+    // Verifica se o caractere está fora do intervalo de dígitos
+    if (charCode < 48 || charCode > 57) {
+      console.log("\nDigite somente números!\n");
+      return getNumber(prompt); // Solicita novamente se a entrada for inválida
+    }
+  }
+
+  // Converte a entrada para número e retorna
+  return Number(input);
 }
-
 
 // Recebe um numero positivo com base na pergunta enviada ao usuário
 export function getNumberPositive(text){
@@ -86,5 +102,5 @@ export function getNumberVector(vector,text){
     }
   }
   console.log("\n!Digite um valor valido!\n")
-  getNumberVector(vector,text)
+  return getNumberVector(vector,text)
 }

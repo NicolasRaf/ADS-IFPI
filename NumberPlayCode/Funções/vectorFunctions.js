@@ -1,7 +1,7 @@
 
 import { getNumber, getNumberInRange, getNumberPositive,ask, getNumberVector} from "./utils.js";
 import { expoAll, fractionAll, generateNumbers, multiplyAll, shuffleVector, sortVector, swapNegatives, valuesSum} from "./vectorUtils.js";
-import { readFileSync, writeFileSync } from "fs";
+import {  readFileSync, writeFileSync } from "fs";
 
 export function initializeVector(currentVector,type){
     if (currentVector.length){
@@ -36,9 +36,8 @@ export function initializeVector(currentVector,type){
         return storageNumbers(size,limitMin,limitMax);
 
     }else if(option === 3){
-        let name = ask(`\nInforme o nome do arquivo com a extensão(Ex: File.txt): `);
+        return readFile();
 
-        return readFile(name);
     }else{
         console.clear();
         console.log(`Operação Cancelada!!!`);
@@ -165,36 +164,45 @@ export function addToVector(vector){
     if (vectorIsEmpty(vector)) return vector
 
     const newVector = initializeVector([],"novo ")
-    console.clear()
-    console.log(`Novo vetor criado e adicionado => ${newVector}`)
 
-    vector += "," + newVector
+    if (newVector.length === 0){
+        console.clear();
+        console.log(`Operação Cancelada!!!`);
 
-    return vector
-}
+        return vector;
 
-export function removeItensByValue(vector){
-    if (vectorIsEmpty(vector)) return vector
+    }
+        console.clear()
+        console.log(`Novo vetor criado e adicionado => ${newVector}`)
 
-    console.log(`Vetor Atual => ${vector}`)
-
-    let valueRemove = getNumberVector(vector,"\nInforme um valor para ser retirado: ")
-    let count = 0
-
-    for (let i in vector){
-        let number = vector[i]
-
-        if (valueRemove === number){
-            count++
-            vector.splice(i,1)
-        }
+    for (let number of newVector){
+        vector.push(number)
     }
 
-    console.clear()
-    console.log(`${count} numero/s foram removido/s com valor ${valueRemove}`)
-
     return vector
 }
+
+export function removeItensByValue(vector) {
+    if (vectorIsEmpty(vector)) return vector;
+  
+    console.log(`Vetor Atual => ${vector}`);
+  
+    const valueRemove = getNumberVector(vector, "\nInforme um valor para ser retirado: ");
+    let count = 0;
+  
+    for (let i = 0; i < vector.length; i++) {
+      if (vector[i] === valueRemove) {
+        vector.splice(i, 1);
+        count++;
+        i--;
+      }
+    }
+  
+    console.clear();
+    console.log(`${count} número/s foram removido/s com valor ${valueRemove}`);
+  
+    return vector;
+  }
 
 export function removeItensByIndex(vector){
     if (vectorIsEmpty(vector)) return vector
@@ -236,7 +244,11 @@ export function saveVector(vector){
     let data = ""
 
     for (let number of vector){
-        data += number + "\n"
+        if (number !== vector[vector.length - 1]){
+            data += number + "\n"
+        }else{
+            data += number
+        }
     }
 
     console.log(`Vetor salvo no arquivo "numbersVector.txt"! `)
@@ -260,20 +272,27 @@ function storageNumbers(size,min,max){
 
 }
 
-function readFile(name){
-    const data = readFileSync(name,"utf-8");
-    let lines = data.split("\n");
-    
-    let vector = [];
+ function readFile(){
+    try {
+        let name = ask(`\nInforme o nome do arquivo com a extensão(Ex: File.txt): `);
+        const data = readFileSync(name,"utf-8");
+        let lines = data.split("\n");
+        
+        let vector = [];
 
-    for (let number of lines){
-        vector.push(number.trim());
+        for (let number of lines){
+            vector.push(Number(number.trim()));
+        }
+
+        console.clear();
+        console.log("Arquivo lido com sucesso!");
+
+        return vector;
+
+    }catch (err){
+        console.log("Arquivo não encontrado, tente novamente!")
+        return readFile()
     }
-
-    console.clear();
-    console.log("Arquivo lido com sucesso!");
-
-    return vector;
 }
 
 function vectorIsEmpty(vector){
