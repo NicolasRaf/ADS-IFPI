@@ -1,7 +1,7 @@
 
 import { getNumber, getNumberInRange, getNumberPositive,ask, getNumberVector} from "./utils.js";
-import { expoAll, fractionAll, generateNumbers, multiplyAll, shuffleVector, sortVector, swapNegatives, valuesSum} from "./vectorUtils.js";
-import {  readFileSync, writeFileSync } from "fs";
+import { expoAll, fractionAll, generateNumbers, multiplyAll, showFiles, shuffleVector, sortVector, swapNegatives, valuesSum} from "./vectorUtils.js";
+import {  readdirSync, readFileSync, writeFileSync } from "fs";
 
 export function initializeVector(currentVector,type){
     if (currentVector.length){
@@ -273,6 +273,8 @@ function storageNumbers(size,min,max){
 }
 
  function readFile(){
+    showFiles(process.cwd())
+
     try {
         let name = ask(`\nInforme o nome do arquivo com a extensão(Ex: File.txt): `);
         const data = readFileSync(name,"utf-8");
@@ -301,3 +303,4 @@ function vectorIsEmpty(vector){
         return true
     }
 }
+

@@ -1,3 +1,5 @@
+import {readdirSync} from "fs"
+
 export function generateNumbers(size,min,max){
     console.clear();
     let count = 0;
@@ -124,4 +126,15 @@ export function shuffleVector(vector){
     console.log(`Valores embaralhados!`);
 
     return shuffledVector;
+}
+
+export function showFiles(path,arquives){
+    arquives = []
+
+    let files = readdirSync(path)
+    console.log(`\n==> Arquivos Encontrados na Pasta: `)
+
+    for (let file of files){
+        console.log(`- ${file}`)
+    }
 }
