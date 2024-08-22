@@ -75,3 +75,16 @@ export function getNumberInRangeZero(message, min, max,text){
     return number
   }
 }
+
+export function getNumberVector(vector,text){
+  let number = getNumber(text)
+
+  for (let i of vector){
+    if (number === Number(i)){
+      return number
+      
+    }
+  }
+  console.log("\n!Digite um valor valido!\n")
+  getNumberVector(vector,text)
+}

@@ -1,25 +1,27 @@
 import {getNumberInRange, ask} from "./Funções/utils.js";
-import { initializeVector, minMaxValues, showLength, showValues, showSum, valuesAverage } from "./Funções/vectorFunctions.js";
+import * as vectorFunctions from "./Funções/vectorFunctions.js";    
 
 function showMenu() {
 
     console.clear();
 
     console.log(`
-    ------------------------------- NumberPlay --------------------------------   
+    ------------------------------- NumberPlay ---------------------------------------  
 
-            [01] Inicializar Vetor           [09] Valores Negativos     
-            [02] Mostrar Valores             [10] Média dos Valores
-            [03] Resetar Vetor               [11] Média dos Valores
-            [04] Quantidade de itens         [12] Média dos Valores
-            [05] Menor e Maior número        [13] Média dos Valores
-            [06] Somatório dos Valores       [14] Média dos Valores
-            [07] Média dos Valores           [15] Média dos Valores
-            [08] Valores Positivos           [16] Média dos Valores
+             [01] Inicializar Vetor           [09] Valores Negativos     
+             [02] Mostrar Valores             [10] Atualizar Valores
+             [03] Resetar Vetor               [11] Adicionar Valores
+             [04] Quantidade de itens         [12] Remover Itens por Valor
+             [05] Menor e Maior número        [13] Remover Item por Posição
+             [06] Somatório dos Valores       [14] Editar Valor por Posição
+             [07] Média dos Valores           [15] Salvar Vetor em Arquivo .txt
+             [08] Valores Positivos           [16] Sair(Save Automático)
+
+    -----------------------------------------------------------------------------------
                                                                             
     `);
 
-    let option = getNumberInRange("Selecione uma opção: ", 1, 17, "\nSelecione uma opção valida!!\n");
+    let option = getNumberInRange("Selecione uma opção: ", 1, 16, "\nSelecione uma opção valida!!\n");
     console.clear();
 
     return option;
@@ -31,35 +33,50 @@ function main(){
     let option = showMenu();
     let vector = [];
 
-    while (option !== 17){
+    while (option !== 16){
 
         if (option === 1){
-             vector = initializeVector(vector);
+             vector = vectorFunctions.initializeVector(vector,"");
         }else if(option === 2){
-            showValues(vector,"all")
+            vectorFunctions.showValues(vector,"all")
         }else if(option === 3){
             console.log("Valores Resetados!");
             vector = [];
         }else if(option === 4){
-            showLength(vector);
+            vectorFunctions.showLength(vector);
         }else if(option === 5){
-            minMaxValues(vector);
+            vectorFunctions.minMaxValues(vector);
         }else if(option === 6){
-            showSum(vector);
+            vectorFunctions.showSum(vector);
         }else if(option === 7){
-            valuesAverage(vector)
+            vectorFunctions.valuesAverage(vector);
         }else if(option === 8){
-            showValues(vector, "positive")
+            vectorFunctions.showValues(vector, "positive");
         }else if(option === 9){
-            showValues(vector, "negative")
+            vectorFunctions.showValues(vector, "negative");
         }else if (option === 10){
-            updateValues(vector)
+            vector = vectorFunctions.updateValues(vector);
+        }else if (option === 11){
+            vector = vectorFunctions.addToVector(vector);
+        }else if (option === 12){
+            vector = vectorFunctions.removeItensByValue(vector);
+        }else if (option === 13){
+            vector = vectorFunctions.removeItensByIndex(vector);
+        }else if (option === 14){
+            vector = vectorFunctions.editItensByIndex(vector);
+        }else if (option === 15){
+            vectorFunctions.saveVector(vector);
         }
-
-
+        
         ask(`\nContinuar(Press Enter)`);
         option = showMenu();
     }
+
+    if (vector.length > 0){
+        vectorFunctions.saveVector(vector);
+    }
+    console.log("Programa Encerrado...")
+        
 }
 
 main();
