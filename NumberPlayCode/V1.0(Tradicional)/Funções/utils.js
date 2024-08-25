@@ -12,10 +12,10 @@ export function aksLetter(text){
   const ASCII = answer.charCodeAt(0);
 
   if (answer.length > 1){
-    console.log("\nDigite apenas um caractere!\n");
+    printRed("\nDigite apenas um caractere!\n");
     return aksLetter(text);
   } else if (ASCII < 65 || ASCII > 90 && ASCII < 97 || ASCII > 122 || answer === ""){
-    console.log("\nDigite somente letras!\n");
+    printRed("\nDigite somente letras!\n");
     return aksLetter(text);
   }
 
@@ -24,7 +24,12 @@ export function aksLetter(text){
 
 // Função para obter um número do usuário
 export function getNumber(prompt) {
-  let input = question(prompt); 
+  let input = question(prompt);
+  
+  if (input === "-"){ 
+    coloredPrint("red", "\nDigite somente números!\n");
+    return getNumber(prompt)
+  }  
 
   // Verifica se a entrada contém apenas dígitos e opcionalmente um sinal de menos no início
   for (let char of input) {
@@ -37,7 +42,7 @@ export function getNumber(prompt) {
 
     // Verifica se o caractere está fora do intervalo de dígitos
     if (charCode < 48 || charCode > 57) {
-      console.log("\nDigite somente números!\n");
+      printRed("\nDigite somente números!\n");
       return getNumber(prompt); // Solicita novamente se a entrada for inválida
     }
   }
@@ -51,7 +56,7 @@ export function getNumberPositive(text){
     const number = getNumber(text);
   
     if (number <= 0){
-      console.log('!!!Digite um valor valido!!!\n');
+      printRed('\nDigite um valor valido!!!\n');
       return getNumberPositive(text);
     }
     return number;
@@ -62,7 +67,7 @@ export function getNumberPositiveZero(text){
     const number = getNumber(text);
   
     if (number < 0){
-      console.log('!!!Digite um valor valido!!!\n');
+      printRed('\nDigite um valor valido!!!\n');
       return getNumberPositive(text);
     }
     
@@ -74,7 +79,7 @@ export function getNumberInRange(message, min, max,text){
     const number = getNumber(message);
     
     if (number < min || number > max){
-      console.log(text);
+      printRed(text);
       return getNumberInRange(message, min, max,text);
     }
     return number;
@@ -85,7 +90,7 @@ export function getNumberInRangeZero(message, min, max,text){
   
   if (number != 0){
     if (number < min || number > max){
-      console.log(text);
+      printRed(text);
       return getNumberInRange(message, min, max,text);
     }
     return number;
@@ -101,6 +106,8 @@ export function getNumberVector(vector,text){
       
     }
   }
-  console.log("\n!Digite um valor valido!\n");
+  printRed("\n!Digite um valor valido!\n");
   return getNumberVector(vector,text);
 }
+
+export const printRed = text => console.log('\x1b[31m%s\x1b[0m',text)

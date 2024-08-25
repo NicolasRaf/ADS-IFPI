@@ -1,14 +1,13 @@
 
-import { getNumber, getNumberInRange, getNumberPositive,ask, getNumberVector} from "./utils.js";
-import { expoAll, fractionAll, generateNumbers, multiplyAll, showFiles, shuffleVector, sortVector, swapNegatives, valuesSum} from "./vectorUtils.js";
-import {  readdirSync, readFileSync, writeFileSync } from "fs";
+import { getNumber, getNumberInRange, getNumberPositive,ask, getNumberVector, coloredPrint} from "./utils.js";
+import { addVector, doFilter, doMap, generateNumbers, showFiles, shuffleVector, sortVector, swapNegatives, valuesSum} from "./vectorUtils.js";
+import { readFileSync, writeFileSync } from "fs";
 
 export function initializeVector(currentVector,type){
     if (currentVector.length){
-        console.log("Reinicie o vetor primeiro!!!");
+        coloredPrint("red", "Reinicie o vetor primeiro!!!");
         return currentVector;
     }
-
 
     console.log(`
     ------- Build Vector -------
@@ -40,19 +39,14 @@ export function initializeVector(currentVector,type){
 
     }else{
         console.clear();
-        console.log(`Operação Cancelada!!!`);
+        coloredPrint("red", `Operação Cancelada!!!`);
 
         return [];
     }
 }
 
-export function showLength(vector){
-    if (vector.length > 0){
-        console.log(`Numero de valores no vetor: ${vector.length}`);
-    }else{
-        console.log("O Vetor está vazio!");
-    }
-}
+export const showLength = vector => (vector.length > 0) ? coloredPrint("blue", `Numero de valores no vetor: ${vector.length}`) : coloredPrint("red", "O Vetor está vazio!");
+
 export function minMaxValues(vector){
     if (vectorIsEmpty(vector)) return vector;
 
@@ -76,43 +70,33 @@ export function minMaxValues(vector){
     console.log(`Menor valor: ${lowestValue[0]} ==> ${lowestValue[1]}° posição`);
 }
 
-export function showSum(vector){
-    if (vectorIsEmpty(vector)) return vector;
+export const showSum = vector => (vectorIsEmpty(vector)) ? vector : console.log(`Somatório: ${valuesSum(vector)}`)
 
-    console.log(`Somatório: ${valuesSum(vector)}`);
-}
 
 export function valuesAverage(vector){
     if (vectorIsEmpty(vector)) return vector;
 
     let average = valuesSum(vector)/vector.length;
     
-    console.log(`Média: ${average.toFixed(1)}`);
+    console.log(`Média: ${average.toFixed(2)}`);
 }
 
 export function showValues(vector, type){
     if (vectorIsEmpty(vector)) {return vector}
 
-    let newVector = [];
+    type === "all" ? console.log(`Valores: ${vector}`) : type
+        
+    if(type === "positive"){
+        vector = doFilter(vector, num => num > 0)
 
-    for (let number of vector){
-        if (number > 0 && type === "positive"){
-            newVector.push(number);
-        }else if (number < 0 && type === "negative"){
-            newVector.push(number);
-        }
+        console.log(`Valores Positivos: ${vector}`);
+        showLength(vector);
+    } else if (type === "negative"){
+        vector = doFilter(vector, num => num < 0)
+
+        console.log(`Valores Negativos: ${vector}`);
+        showLength(vector);
     }
-
-    if (type === "all"){
-        console.log(`Valores: ${vector}`);
-    } else if(type === "positive"){
-        console.log(`Valores Positivos: ${newVector}`);
-        showLength(newVector);
-    } else if(type === "negative"){
-        console.log(`Valores Negativos: ${newVector}`);
-        showLength(newVector);
-    }
-
 }
 
 export function updateValues(vector){
@@ -128,35 +112,37 @@ export function updateValues(vector){
 
     let option = getNumberInRange("==> ",1,6,"\nSelecione uma opção valida!\n");
 
-    if (option === 1){
-        let value = getNumber("\nDigite o valor para ser multiplicado: ");
-
-        return multiplyAll(vector,value);
-    }
-    else if (option === 2){
-        let value = getNumber("\nDigite o valor que para se elevar: ");
-
-        return expoAll(vector,value);
-    }
-    else if (option === 3){
-        let numerator = getNumber("\nDigite o valor para o numerador: ");
-        let denominator = getNumber("Digite o valor para o denominador: ");
-
-        let value = numerator/denominator;
-        
-        return fractionAll(vector,value);
-    }
-    else if (option === 4){
-        let limitMin = getNumber("\nInforme o limite inferior: ");
-        let limitMax = getNumber("Informe o limite superior: ");
-        
-        return swapNegatives(vector,limitMin,limitMax);
-    }
-    else if (option === 5){
-        return sortVector(vector);
-    }
-    else if (option === 6){
-        return shuffleVector(vector);
+    switch (option) {
+        case 1:
+            let value1 = getNumber("\nDigite o valor para ser multiplicado: ");
+            console.clear();
+            console.log(`Todos valores multiplicados por ${value1}`);
+            return doMap(vector, item => item * value1);
+    
+        case 2:
+            let value2 = getNumber("\nDigite o valor que para se elevar: ");
+            console.clear();
+            console.log(`Todos valores elevados a ${value2}`);
+            return doMap(vector, item => item ** value2);
+    
+        case 3:
+            let numerator = getNumber("\nDigite o valor para o numerador: ");
+            let denominator = getNumber("Digite o valor para o denominador: ");
+            let value3 = numerator / denominator;
+            console.clear();
+            console.log(`Todos valores reduzidos ao resultado da fração ==> ${value3}`);
+            return doMap(vector, item => item ** value3);
+    
+        case 4:
+            let limitMin = getNumber("\nInforme o limite inferior: ");
+            let limitMax = getNumber("Informe o limite superior: ");
+            return swapNegatives(vector, limitMin, limitMax);
+    
+        case 5:
+            return sortVector(vector);
+    
+        case 6:
+            return shuffleVector(vector);
     }
 }
 
@@ -165,21 +151,16 @@ export function addToVector(vector){
 
     const newVector = initializeVector([],"novo ");
 
-    if (newVector.length === 0){
+    if (vectorIsEmpty(newVector)){
         console.clear();
-        console.log(`Operação Cancelada!!!`);
+        coloredPrint("red", `Operação Cancelada!!!`);
 
         return vector;
-
     }
         console.clear();
         console.log(`Novo vetor criado e adicionado => ${newVector}`);
 
-    for (let number of newVector){
-        vector.push(number);
-    }
-
-    return vector;
+    return addVector(vector,newVector)
 }
 
 export function removeItensByValue(vector) {
@@ -239,8 +220,10 @@ export function editItensByIndex(vector){
     return vector;
 }
 
-export function saveVector(vector){
+export function saveVector(vector, type){
     if (vectorIsEmpty(vector)) return vector;
+
+    let fileName = (type === "manual") ? ask("Informe o nome do arquivo(sem extensão): ") : "vector"
     let data = "";
 
     for (let number of vector){
@@ -251,9 +234,9 @@ export function saveVector(vector){
         }
     }
 
-    console.log(`Vetor salvo no arquivo "numbersVector.txt"! `);
+    coloredPrint("green", `Vetor salvo no arquivo "${fileName}.txt"! `);
 
-    writeFileSync("./NumberVectors/vector.txt", data); 
+    writeFileSync(`./NumberVectors/${fileName}.txt`, data); 
 }
 
 function storageNumbers(size,min,max){
@@ -267,7 +250,7 @@ function storageNumbers(size,min,max){
         vector.push(number);
     }
 
-    console.log("Vetor gerado com sucesso!");
+    coloredPrint("green", "Vetor gerado com sucesso!");
     return vector;
 
 }
@@ -289,12 +272,12 @@ function storageNumbers(size,min,max){
         }
 
         console.clear();
-        console.log("Arquivo lido com sucesso!");
+        coloredPrint("green", "Arquivo lido com sucesso!");
 
         return vector;
 
     }catch (err){
-        console.log("Arquivo não encontrado, tente novamente!");
+        coloredPrint("red", "Arquivo não encontrado, tente novamente!");
         return readFile();
     }
 }
@@ -305,4 +288,3 @@ function vectorIsEmpty(vector){
         return true;
     }
 }
-
