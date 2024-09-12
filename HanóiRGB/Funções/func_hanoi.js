@@ -29,20 +29,19 @@ export function creatTower(size = 9){
 }
 
 
-export function checkVictory(vecR, vecG, vecB){
-    const towers = [vecR, vecG, vecB]
-         
-    for (let vec in towers){    
-        let tower = towers[vec]
+export function checkVictory(allTowers){
+    
+    for (let name in allTowers){ 
+        let tower = allTowers[name];
 
         for (let element of tower){
-            if (element !== "R" && vec === 0) { return false }
+            if (element !== "R" && name === "towerR") { return false }
             
-            if (element !== "G" && vec === 1) { return false }
+            if (element !== "G" && name === "towerG") { return false }
              
-            if (element !== "B" && vec === 2) { return false }
+            if (element !== "B" && name === "towerB") { return false }
         }
     }
 
-    return true
+    return true;
 }

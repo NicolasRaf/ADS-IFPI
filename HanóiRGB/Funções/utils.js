@@ -133,3 +133,7 @@ export function coloredPrint(color, prompt){
 
   console.log(`${colorsBase[color]}%s\x1b[0m`, prompt)
 }
+
+export function printInLine(text){
+  process.stdout.write(text)
+}
