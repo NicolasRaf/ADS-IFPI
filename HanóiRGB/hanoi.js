@@ -1,16 +1,10 @@
 import { ask } from "./Funções/utils.js";
-import * as funcHanoi from "./Funções/func_hanoi.js"
+import * as funcsHanoi from "./Funções/func_hanoi.js";
 
 function showTowers(){
     console.clear();
 
-    console.log(`
-    --------------------------------- Hanói RGB --------------------------------------------
-
-
-    ---------------------------------------------------------------------------------------\n`);
-    
-    let move = ask("Qual será sua jogada: ");
+    let move = funcsHanoi.askPlay("Qual será sua jogada: ");
 
     console.clear();
     return move;
@@ -18,15 +12,16 @@ function showTowers(){
 }
 
 function main(){
+    // const player1 = ask("Digite o nome do primeiro player: ");
+    // const player2 = ask("Digite o nome do segundo player: ");
 
-    let torreR = creatTower()
-    let torreG = []
-    let torreB = []
+    let torreR = funcsHanoi.creatTower(9);
+    let torreG = [];
+    let torreB = [];
     
-    for (let move = showTowers(); move != 8;){
-        
-        
-        move = showTowers();
+    for (;!funcsHanoi.checkVictory();){
+         showTowers();
+         moves++
     }
 }
 
