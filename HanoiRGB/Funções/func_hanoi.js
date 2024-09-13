@@ -35,11 +35,11 @@ export function checkVictory(allTowers){
         let tower = allTowers[name];
 
         for (let element of tower){
-            if (element !== "R" && name === "Torre R") { return false }
+            if (element !== "R" && name === "towerR") { return false }
             
-            if (element !== "G" && name === "Torre G") { return false }
+            if (element !== "G" && name === "towerG") { return false }
              
-            if (element !== "B" && name === "Torre B") { return false }
+            if (element !== "B" && name === "towerB") { return false }
         }
     }
 
@@ -47,52 +47,45 @@ export function checkVictory(allTowers){
 }
 
 export function clone(allTowers){
-    const newVector = { "Torre R": [], "Torre G": [], "Torre B": [] }
+    let towerR = allTowers["towerR"].slice();
+    let towerG = allTowers["towerG"].slice();
+    let towerB = allTowers["towerB"].slice();
 
-    let count = 0;
-    for (let name in allTowers){
-        const tower = allTowers[name];
+    const newTowers = {towerR, towerG, towerB}
 
-        for (let element of tower){
-            newVector[name].push(element);
-        }
-        count++;
-  } 
 
-  return newVector;
+  return newTowers;
 }
 
-export function printTowers(allTowers) {
+export function printTowers(Towers) {
     let line = "";
-    for (let name in allTowers) {
-        line += `\t ${name}     `;
-        }
-        
+    for (let name in Towers) {
+        line += `\t${name}\t\t`; 
+    }
+
     console.log(line);
 
-    for (let i = 0; i < 9; i++){
-        let numbers = "";
-        for (let name in allTowers) {
-            const tower = allTowers[name];
+    for (let i = 0; i < 9; i++) {
+        let row = "";
+        for (let name in Towers) {
+            const tower = Towers[name];
 
-            numbers += (tower[i] !== undefined) ? `\t   ${tower[i]}        ` : ``; 
-        }
-        console.log(numbers);
+            
+            row += (tower[i] !== undefined) ? `\t  ${tower[i]}\t\t` : `\t   \t\t`;
     }
+    console.log(row);
+  }
 }
 
 
 export function makeMove(move, Towers){
-    const givertTower =  Towers[`Torre ${move[0]}`]
-    const targetTower = Towers[`Torre ${move[1]}`]
+    const givertTower =  Towers[`tower${move[0]}`];
+    const targetTower = Towers[`tower${move[1]}`];
 
-    const element = givertTower[givertTower.length - 1]
-    if (typeof(element) !== "undefined" || element !== " "){
-        targetTower.push(element) 
-        givertTower.splice(givertTower.length - 1,1)
+    const element = givertTower.pop() 
+    if (element !== undefined){
+        targetTower.push(element);
     } else {
-        console.log("Movimento Invalido!")
+        console.log("Movimento Invalido!");
     }
-
-    return Towers
 }
