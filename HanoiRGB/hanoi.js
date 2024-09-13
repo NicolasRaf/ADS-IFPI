@@ -30,7 +30,7 @@ function main(){
     const player1 = ask("Digite o nome do primeiro player: ");
     const player2 = ask("Digite o nome do segundo player: ");
 
-    let towerR = creatTower(4);
+    let towerR = creatTower(9);
     let towerG = creatTower(0);
     let towerB = creatTower(0);
     let allTowers = { towerR, towerG, towerB}
