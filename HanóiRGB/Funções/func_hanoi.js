@@ -6,8 +6,8 @@ export function askPlay(text){
     const move = ask(text);
 
     for (let play of playsBase) {
-        if (move === play){
-            return move;
+        if (move === play.toUpperCase() || move === play){
+            return move.toUpperCase();
         }
     }
 
@@ -16,7 +16,7 @@ export function askPlay(text){
 
 }
 
-export function creatTower(size = 9){
+export function creatTower(size){
     const elements = ["R","G","B"];
     const tower = [];
 
@@ -35,13 +35,67 @@ export function checkVictory(allTowers){
         let tower = allTowers[name];
 
         for (let element of tower){
-            if (element !== "R" && name === "towerR") { return false }
+            if (element !== "R" && name === "Torre R") { return false }
             
-            if (element !== "G" && name === "towerG") { return false }
+            if (element !== "G" && name === "Torre G") { return false }
              
-            if (element !== "B" && name === "towerB") { return false }
+            if (element !== "B" && name === "Torre B") { return false }
         }
     }
 
     return true;
+}
+
+export function clone(allTowers){
+    const newVector = { "Torre R": [], "Torre G": [], "Torre B": [] }
+
+    let count = 0;
+    for (let name in allTowers){
+        const tower = allTowers[name];
+
+        for (let element of tower){
+            newVector[name].push(element);
+        }
+        count++;
+  } 
+
+  return newVector;
+}
+
+export function printTowers(allTowers) {
+    let line = "";
+    for (let name in allTowers) {
+        line += `\t ${name}     `;
+        }
+        
+    console.log(line);
+
+    for (let i = 0; i < 9; i++){
+        let numbers = "";
+        for (let name in allTowers) {
+            const tower = allTowers[name];
+
+            numbers += (tower[i] !== undefined) ? `\t   ${tower[i]}        ` : ``; 
+        }
+        console.log(numbers);
+    }
+}
+
+
+export function makeMove(move, Towers){
+    const givertTower =  Towers[`Torre ${move[0]}`]
+    const targetTower = Towers[`Torre ${move[1]}`]
+
+    console.log(givertTower)
+    console.log(targetTower)
+
+    const element = givertTower[givertTower.length - 1]
+    if (typeof(element) !== "undefined" || element !== " "){
+        targetTower.push(element) 
+        givertTower.splice(givertTower.length - 1,1)
+    } else {
+        console.log("Movimento Invalido!")
+    }
+
+    return Towers
 }

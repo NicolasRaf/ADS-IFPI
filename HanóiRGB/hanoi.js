@@ -1,18 +1,11 @@
-import * as funcsHanoi from "./Funções/func_hanoi.js";
+import { askPlay, checkVictory, clone, creatTower, makeMove, printTowers } from "./Funções/func_hanoi.js";
+import { ask } from "./Funções/utils.js";
 
-function showTowers(allTowers, name){
+function showTowers(allTowers, player){
     console.clear();
+    printTowers(allTowers);
 
-    for (let name in allTowers){
-        const tower = allTowers[name];
-        printInLine(` ${name}`);
-
-        for (let element of tower){
-            console.log(`   ${element}`);
-        }
-    }
-
-    let move = funcsHanoi.askPlay("Qual será sua jogada: ");
+    let move = askPlay(`\nInforme o movimento ${player} : `);
 
     console.clear();
     return move;
@@ -20,25 +13,25 @@ function showTowers(allTowers, name){
 }
 
 function main(){
-    // const player1 = ask("Digite o nome do primeiro player: ");
-    // const player2 = ask("Digite o nome do segundo player: ");
+    const player1 = ask("Digite o nome do primeiro player: ");
+    const player2 = ask("Digite o nome do segundo player: ");
 
-    let towerR = funcsHanoi.creatTower(9);
-    let towerG = funcsHanoi.creatTower(0);
-    let towerB = funcsHanoi.creatTower(0);
-    let allTowers = { towerR, towerG, towerB }
+    let towerR = creatTower(9);
+    let towerG = creatTower(0);
+    let towerB = creatTower(0);
+    let allTowers = { "Torre R":towerR, "Torre G":towerG, "Torre B":towerB}
+
+    let cloneTowers = clone(allTowers);
+    let moves = 0;
     
-    let moves = 0
     
-    
-    for (;!funcsHanoi.checkVictory(allTowers);) {
-        showTowers(allTowers, "Eu");
+    for (;!checkVictory(allTowers);) {
+        let move = showTowers(allTowers, player1);
+        allTowers = makeMove(move, allTowers);
+
         moves++;
     }
 
-    if (funcsHanoi.checkVictory(allTowers)){
-        console.log("Ganhouu");
-    }
 }
 
 main();
