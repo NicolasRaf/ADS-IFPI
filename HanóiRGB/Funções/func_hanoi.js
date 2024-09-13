@@ -86,9 +86,6 @@ export function makeMove(move, Towers){
     const givertTower =  Towers[`Torre ${move[0]}`]
     const targetTower = Towers[`Torre ${move[1]}`]
 
-    console.log(givertTower)
-    console.log(targetTower)
-
     const element = givertTower[givertTower.length - 1]
     if (typeof(element) !== "undefined" || element !== " "){
         targetTower.push(element) 
