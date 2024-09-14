@@ -35,11 +35,11 @@ export function checkVictory(allTowers){
         let tower = allTowers[name];
 
         for (let element of tower){
-            if (element !== "R" && name === "towerR") { return false }
+            if (element !== "R" && name === "Torre R") { return false }
             
-            if (element !== "G" && name === "towerG") { return false }
+            if (element !== "G" && name === "Torre G") { return false }
              
-            if (element !== "B" && name === "towerB") { return false }
+            if (element !== "B" && name === "Torre B") { return false }
         }
     }
 
@@ -51,13 +51,16 @@ export function clone(allTowers){
     let towerG = allTowers["towerG"].slice();
     let towerB = allTowers["towerB"].slice();
 
-    const newTowers = {towerR, towerG, towerB}
+    const newTowers = {"Torre R": towerR, "Torre G": towerG, "Torre B": towerB}
+    
 
 
   return newTowers;
 }
 
-export function printTowers(Towers) {
+export function showTowers(Towers, player) {
+    console.clear();
+
     let line = "";
     for (let name in Towers) {
         line += `\t${name}\t\t`; 
@@ -70,17 +73,21 @@ export function printTowers(Towers) {
         for (let name in Towers) {
             const tower = Towers[name];
 
-            
             row += (tower[i] !== undefined) ? `\t  ${tower[i]}\t\t` : `\t   \t\t`;
     }
     console.log(row);
   }
+
+    let move = askPlay(`\nInforme o movimento ${player}: `);
+
+    console.clear();
+    return move;
 }
 
 
 export function makeMove(move, Towers){
-    const givertTower =  Towers[`tower${move[0]}`];
-    const targetTower = Towers[`tower${move[1]}`];
+    const givertTower =  Towers[`Torre ${move[0]}`];
+    const targetTower = Towers[`Torre ${move[1]}`];
 
     const element = givertTower.pop() 
     if (element !== undefined){
