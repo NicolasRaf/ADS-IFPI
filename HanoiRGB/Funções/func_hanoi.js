@@ -1,6 +1,19 @@
-import { ask, coloredPrint } from "./utils.js";
+import { ask, coloredPrint, getNumberInRange } from "./utils.js";
 
-export function askPlay(text){
+export function selectMode() {
+    console.log(`
+        ---------- Hanói RGB ----------
+            [1] Nível Básico 
+            [2] Nível Intermediário     
+            [3] Nível Avançado
+            [4] Finalizar Jogo 
+        -------------------------------
+        `);
+
+    return getNumberInRange(">> Selecione um modo: ",1,4,"Selecione um modo entre os listados!\n");
+}
+
+export function askPlay(text, towers){
     const playsBase = ["rg","rb","gr","gb","bg","br"];
     
     const move = ask(text);
@@ -11,12 +24,35 @@ export function askPlay(text){
         }
     }
 
-    coloredPrint("red","Faça um movimento valido!\n");
-    return askPlay(text);
+    showTowers(towers)
+    coloredPrint("red","\nFaça um movimento valido!");
+    return askPlay(text, towers);
 
 }
 
-export function creatTower(size){
+export function creatTowers(mode){
+    const towers = { "towerR": [] , "towerG": [], "towerB": [] }
+
+    switch (mode) {
+        case 1: 
+            towers["towerR"] = fillTower(9);
+            return towers;
+        case 2: 
+            for (let name in towers){
+                const size = Math.floor(Math.random() * ((6 + 1) - 3)) + 3; // Max = 6 || Min = 3
+                towers[name] = fillTower(size);
+            }
+
+            return towers;
+        case 3: 
+            for (let name in towers) { towers[name] = fillTower(8) }
+   
+            return towers;
+    }
+}
+
+
+function fillTower(size) {
     const elements = ["R","G","B"];
     const tower = [];
 
@@ -24,10 +60,8 @@ export function creatTower(size){
         let index = Math.floor(Math.random() * elements.length);
         tower.push(elements[index]);
     }
-
     return tower;
 }
-
 
 export function checkVictory(allTowers){
     
@@ -42,7 +76,6 @@ export function checkVictory(allTowers){
             if (element !== "B" && name === "Torre B") { return false }
         }
     }
-
     return true;
 }
 
@@ -52,47 +85,54 @@ export function clone(allTowers){
     let towerB = allTowers["towerB"].slice();
 
     const newTowers = {"Torre R": towerR, "Torre G": towerG, "Torre B": towerB}
-    
-
 
   return newTowers;
 }
 
-export function showTowers(Towers, player) {
+export function showTowers(Towers) {
     console.clear();
-
+    const colorCod = { "Torre R": "\x1b[31m", "Torre G": "\x1b[32m", "Torre B": "\x1b[34m" };
+    
     let line = "";
     for (let name in Towers) {
-        line += `\t${name}\t\t`; 
+        line += `\t${colorCod[name]}${name}\x1b[0m\t\t`; 
     }
-
+    
     console.log(line);
-
-    for (let i = 0; i < 9; i++) {
+    
+    for (let i = 8; i >= 0; i--) {
         let row = "";
         for (let name in Towers) {
             const tower = Towers[name];
-
+            
             row += (tower[i] !== undefined) ? `\t  ${tower[i]}\t\t` : `\t   \t\t`;
+        }
+        console.log(row);
     }
-    console.log(row);
-  }
 
-    let move = askPlay(`\nInforme o movimento ${player}: `);
-
-    console.clear();
-    return move;
+  console.log("\x1b[31m |===================|\x1b[32m |====================|\x1b[34m |=====================|\x1b[0m");
 }
 
 
-export function makeMove(move, Towers){
-    const givertTower =  Towers[`Torre ${move[0]}`];
-    const targetTower = Towers[`Torre ${move[1]}`];
+export function makeMove(towers, player){
+    let move = askPlay(`\nInforme o movimento ${player}: `, towers);
 
-    const element = givertTower.pop() 
-    if (element !== undefined){
+    const givertTower =  towers[`Torre ${move[0]}`];
+    const targetTower = towers[`Torre ${move[1]}`];
+
+    const element = givertTower.pop();
+    if (element !== undefined && targetTower.length < 9){
         targetTower.push(element);
-    } else {
-        console.log("Movimento Invalido!");
+    } 
+    else if (element !== undefined) {
+        givertTower.push(element);
+        showTowers(towers);
+        coloredPrint("red", "\nMovimento Invalido!");
+        return makeMove(towers, player)
+    } 
+    else {
+        showTowers(towers);
+        coloredPrint("red", "\nMovimento Invalido!");
+        return makeMove(towers, player)
     }
 }
