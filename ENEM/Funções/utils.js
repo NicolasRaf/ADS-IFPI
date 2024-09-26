@@ -151,3 +151,32 @@ export function coloredPrint(color, prompt){
 export function printInLine(text){
   process.stdout.write(text);
 }
+
+export function quickSortDict(vector, area, reversed = false){
+    if (vector.length <= 1) {
+        return vector;
+    }
+
+    const pivot = vector[0];
+    const left = []
+    const right = []
+
+    for (let number of vector.slice(1)) {
+
+      if (reversed) {
+          if (number[area] > pivot[area]) {
+              left.push(number);
+          } else {
+              right.push(number); 
+          }
+      } else {
+          if (number[area] < pivot[area]) {
+              left.push(number); 
+          } else {
+              right.push(number); 
+          }
+      }
+  }
+
+    return [...quickSortDict(left, area, reversed), pivot, ...quickSortDict(right, area, reversed)];
+}

@@ -23,14 +23,15 @@ function showMenu() {
 
 function main() {
     const database = loadSchoolMatriz();
-
+    
     for (let option = showMenu(); option < 10;) {
-            allFunctions[option - 1](database);
+            console.clear();
+            allFunctions[option - 1](database, option);
 
             ask("\nContinuar(Press Enter)");
+            console.clear();    
             option = showMenu();
         }
-
     } 
 
 
